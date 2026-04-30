@@ -3,10 +3,7 @@ import PhotoCards from "./PhotoCards";
 const TopGenerations = async () => {
   const res = await fetch("https://pixen-next-js.vercel.app/data.json");
   const photos = await res.json();
-  console.log(photos);
   const topPhotos = photos.slice(0, 8);
-
-  console.log(topPhotos);
 
   return (
     <div>
