@@ -1,8 +1,19 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
+import { Avatar, Button } from "@heroui/react";
+import { userAc } from "better-auth/plugins/admin/access";
 import Image from "next/image";
 import Link from "next/link";
 
 const Navbar = () => {
+  const userData = authClient.useSession();
+  console.log(userData);
+  const user = userData.data?.user;
+
+  const handleSignOut = async () => {
+    await authClient.signOut();
+  };
+
   return (
     <div className="border-b px-2">
       <nav className=" flex justify-between items-center  py-3 max-w-7xl mx-auto w-full">
@@ -34,14 +45,31 @@ const Navbar = () => {
         </ul>
 
         <div className="flex gap-4">
-          <ul className="flex items-center gap-2  text-sm">
-            <li>
-              <Link href={"/signup"}>SignUp</Link>
-            </li>
-            <li>
-              <Link href={"/signin"}>SignIn</Link>
-            </li>
-          </ul>
+          {!user && (
+            <ul className="flex items-center gap-2  text-sm">
+              <li>
+                <Link href={"/signup"}>SignUp</Link>
+              </li>
+              <li>
+                <Link href={"/signin"}>SignIn</Link>
+              </li>
+            </ul>
+          )}
+          {user && (
+            <div className="flex gap-2 items-center">
+              <Avatar>
+                <Avatar.Image
+                  alt="John Doe"
+                  src={user.image}
+                  referrerPolicy="no-referrer"
+                />
+                <Avatar.Fallback>JD</Avatar.Fallback>
+              </Avatar>
+              <Button size="sm" variant="danger" onClick={handleSignOut}>
+                Sign Out
+              </Button>
+            </div>
+          )}
         </div>
       </nav>
     </div>

@@ -1,5 +1,6 @@
 import { Button, Card, Chip, Separator } from "@heroui/react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { FaHeart } from "react-icons/fa";
 import { IoMdDownload } from "react-icons/io";
@@ -10,6 +11,7 @@ const PhotoCards = ({ photo }) => {
       <div>
         <div className="relative aspect-square w-full">
           <Image
+            sizes={"sm"}
             src={photo.imageUrl}
             fill
             alt={photo.title}
@@ -43,9 +45,11 @@ const PhotoCards = ({ photo }) => {
         </div>
       </div>
 
-      <Button className="w-full" variant="outline">
-        View
-      </Button>
+      <Link href={`/all-photos/${photo.id}`}>
+        <Button className="w-full" variant="outline">
+          View
+        </Button>
+      </Link>
     </Card>
   );
 };
